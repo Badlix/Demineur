@@ -2,10 +2,19 @@
 #define GRID_H
 #include "cell.h"
 #include <vector>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 class Grid {
 
 public :
+
+    /**
+     * @brief Create a grid with values depending on parameters
+     * @return a vector of vector of cells ready to be used in a play
+     */
+    std::vector<std::vector<Cell>> initGrid();
 
     /**
      * @brief Constructor for the class Grid
@@ -24,8 +33,8 @@ public :
     Cell getCell(const unsigned x, const unsigned y);
 
 private:
-    unsigned m_width;
-    unsigned m_height;
+    size_t m_width;
+    size_t m_height;
     unsigned m_bombsNb;
     std::vector<std::vector<Cell>> m_cells;
 };

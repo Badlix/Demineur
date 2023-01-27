@@ -69,6 +69,7 @@ SOURCES       = ../MinGL/src/audio/audioengine.cpp \
 		../MinGL/src/transition/transition.cpp \
 		../MinGL/src/transition/transition_contract.cpp \
 		../MinGL/src/transition/transition_engine.cpp \
+		../Demineur/grid.cpp \
 		../Demineur/main.cpp 
 OBJECTS       = audioengine.o \
 		cexception.o \
@@ -87,6 +88,7 @@ OBJECTS       = audioengine.o \
 		transition.o \
 		transition_contract.o \
 		transition_engine.o \
+		grid.o \
 		main.o
 DIST          = /opt/Qt-6.3/6.3.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt-6.3/6.3.0/gcc_64/mkspecs/common/unix.conf \
@@ -262,6 +264,7 @@ DIST          = /opt/Qt-6.3/6.3.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/amuhome/l22011431/PP/Demineur/MinGL/include/mingl/transition/transition_contract.h \
 		/amuhome/l22011431/PP/Demineur/MinGL/include/mingl/transition/transition_engine.h \
 		/amuhome/l22011431/PP/Demineur/MinGL/include/mingl/transition/transition_types.h \
+		cell.h \
 		grid.h ../MinGL/src/audio/audioengine.cpp \
 		../MinGL/src/exception/cexception.cpp \
 		../MinGL/src/mingl.cpp \
@@ -279,6 +282,7 @@ DIST          = /opt/Qt-6.3/6.3.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../MinGL/src/transition/transition.cpp \
 		../MinGL/src/transition/transition_contract.cpp \
 		../MinGL/src/transition/transition_engine.cpp \
+		../Demineur/grid.cpp \
 		../Demineur/main.cpp
 QMAKE_TARGET  = Demineur
 DESTDIR       = 
@@ -766,6 +770,10 @@ transition_engine.o: ../MinGL/src/transition/transition_engine.cpp ../MinGL/incl
 		../MinGL/include/mingl/transition/itransitionable.h \
 		../MinGL/include/mingl/transition/transition_types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o transition_engine.o ../MinGL/src/transition/transition_engine.cpp
+
+grid.o: ../Demineur/grid.cpp ../Demineur/grid.h \
+		../Demineur/cell.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grid.o ../Demineur/grid.cpp
 
 main.o: ../Demineur/main.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Demineur/main.cpp
