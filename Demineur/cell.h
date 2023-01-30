@@ -8,4 +8,9 @@ struct Cell {
     bool isHidden;
 };
 
+// List of value :
+// - 0, ..., 8 : normal cell values
+// - 9 : bombs
+// - 10 : flag
+
 #endif // CELL_H

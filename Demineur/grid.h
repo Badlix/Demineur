@@ -20,9 +20,9 @@ public :
      * @brief Constructor for the class Grid
      * @param[in] width : Number of cells in a line of the grid
      * @param[in] height : Number of cells in a columon of the grid
-     * @param BombsNb : Inital number of bombs in the grid
+     * @param[in] BombsNb : Inital number of bombs in the grid
      */
-    Grid(const unsigned &width, const unsigned &height, unsigned &bombsNb);
+    Grid(const unsigned width, const unsigned height, const unsigned bombsNb);
 
     /**
      * @brief get a cell from the grid at given coordinate
@@ -30,7 +30,75 @@ public :
      * @param[in] y : coordinate y of the cell
      * @return a cell
      */
-    Cell getCell(const unsigned x, const unsigned y);
+    Cell &getCell(const unsigned x, const unsigned y);
+
+    /**
+     * @brief getRightCell
+     * @param[in] a cell
+     * @return the cell next to the right
+     */
+    Cell &getRightCell(const Cell &cell);
+
+    /**
+     * @brief getLeftCell
+     * @param[in] a cell
+     * @return the cell next to the left
+     */
+    Cell &getLeftCell(const Cell &cell);
+
+    /**
+     * @brief getUpCell
+     * @param[in] a cell
+     * @return the cell above
+     */
+    Cell &getUpCell(const Cell &cell);
+
+    /**
+     * @brief getDownCell
+     * @param[in] a cell
+     * @return the cell under
+     */
+    Cell &getDownCell(const Cell &cell);
+
+    /**
+     * @brief get all the cell next to a certain cell
+     * @param[in] a cell
+     * @return a list between 3 and 8 cells
+     */
+    std::vector<Cell> &getAllNearCell(const Cell &cell);
+
+    /**
+     * @brief check if there is a cell next to the right of a certain cell
+     * @param[in] a cell
+     * @return a booleen
+     */
+    bool isThereCellRight(const Cell &cell);
+
+    /**
+     * @brief check if there is a cell next to the left of a certain cell
+     * @param[in] a cell
+     * @return a booleen
+     */
+    bool isThereCellLeft(const Cell &cell);
+
+    /**
+     * @brief check if there is a cell above a certain cell
+     * @param[in] a cell
+     * @return a booleen
+     */
+    bool isThereCellUp(const Cell &cell);
+
+    /**
+     * @brief check if there is a cell under a certain cell
+     * @param[in] a cell
+     * @return a booleen
+     */
+    bool isThereCellDown(const Cell &cell);
+
+    /**
+     * @brief show cells fo the grid
+     */
+    void showCells();
 
 private:
     size_t m_width;
