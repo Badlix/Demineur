@@ -1,52 +1,27 @@
 #include <iostream>
 #include <cassert>
 #include "grid.h"
+#include "game.h"
 
 using namespace std;
 
 vector<vector<Cell>> Grid::initGrid() {
     // Initialisation of empty cells
     vector<vector<Cell>> cells = {};
-    for (unsigned i (0) ; i < m_height; ++i) {
+    for (unsigned y (0) ; y < m_height; ++y) {
         cells.push_back({});
-        for (unsigned j (0); j < m_width; ++j) {
-            cells[i].push_back(Cell{j,i,0,true});
-        }
-    }
-
-    // Implant bombs
-    srand(time(NULL));
-    unsigned bombsInGrid (0);
-    Cell aCell;
-    while (bombsInGrid != m_bombsNb) {
-        aCell = m_cells[rand()%m_height][rand()%m_width];
-        if (getCell(aCell.posX, aCell.posY).value == 9) continue;
-        getCell(aCell.posX, aCell.posY).value = 9;
-        ++bombsInGrid;
-    }
-
-    // change cell value depending of bombs proximity
-    vector<Cell> nearCells = {};
-    for (unsigned y (0); y < m_height; ++y) {
         for (unsigned x (0); x < m_width; ++x) {
-            if (getCell(x, y).value == 9) {
-                nearCells = getAllNearCell(getCell(x,y));
-                for (Cell &cell : nearCells) {
-                    if (cell.value < 9) ++cell.value;
-                }
-            }
+            cells[y].push_back(Cell{x,y,0,true});
         }
     }
-
     return cells;
 }
 
 Grid::Grid(const unsigned width, const unsigned height, const unsigned bombsNb) {
     m_width = width;
     m_height = height;
-    m_bombsNb = bombsNb;
-    //m_cells = initGrid();
-    m_cells = {{Cell{0,0,1,false}, Cell{1,0,2,false}}, {Cell{0,1,3,false}, Cell{1,1,4,false}}};
+    m_bombNb = bombsNb;
+    m_cells = initGrid();
 }
 
 Cell& Grid::getCell(const unsigned x, const unsigned y) {
@@ -71,7 +46,7 @@ Cell& Grid::getDownCell(const Cell &cell) {
     return m_cells[cell.posY+1][cell.posX];
 }
 
-vector<Cell>& Grid::getAllNearCell(const Cell &cell) {
+vector<Cell> Grid::getAllNearCell(const Cell &cell) {
     vector<Cell> nearCells = {};
     // up
     if (isThereCellUp(cell)) {
@@ -114,7 +89,7 @@ bool Grid::isThereCellDown(const Cell &cell) {
 
 void Grid::showCells() {
     cout << endl;
-    for (vector<Cell> line : m_cells) {
+    for (const vector<Cell> &line : m_cells) {
         for (Cell cell : line) {
             cout << cell.value << ' ';
         }
@@ -122,8 +97,21 @@ void Grid::showCells() {
     }
 }
 
+size_t Grid::getWidth() {
+    return m_width;
+}
 
+size_t Grid::getHeight() {
+    return m_height;
+}
 
+unsigned Grid::getBombNb() {
+    return m_bombNb;
+}
+
+std::vector<std::vector<Cell>> &Grid::getAllCells() {
+    return m_cells;
+}
 
 
 

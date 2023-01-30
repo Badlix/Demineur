@@ -65,7 +65,7 @@ public :
      * @param[in] a cell
      * @return a list between 3 and 8 cells
      */
-    std::vector<Cell> &getAllNearCell(const Cell &cell);
+    std::vector<Cell> getAllNearCell(const Cell &cell);
 
     /**
      * @brief check if there is a cell next to the right of a certain cell
@@ -100,10 +100,30 @@ public :
      */
     void showCells();
 
+    /**
+     * @brief get the width of the grid
+     */
+    size_t getWidth();
+
+    /**
+     * @brief get the height of the grid
+     */
+    size_t getHeight();
+
+    /**
+     * @brief get the number of bombs actually present on the grid
+     */
+    unsigned getBombNb();
+
+    /**
+     * @brief get the matrice of cells in the grid
+     */
+    std::vector<std::vector<Cell>> &getAllCells();
+
 private:
-    size_t m_width;
-    size_t m_height;
-    unsigned m_bombsNb;
+    size_t m_width = 1;
+    size_t m_height = 1;
+    unsigned m_bombNb;
     std::vector<std::vector<Cell>> m_cells;
 };
 

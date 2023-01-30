@@ -1,15 +1,19 @@
 #include <iostream>
+#include <mingl/mingl.h>
 #include "cell.h"
 #include "grid.h"
+#include "game.h"
 
 using namespace std;
 
 int main()
 {
     cout << "Hello World!" << endl;
-    Grid grid(2,2,0);
+    Grid grid(5,5,7);
+    initGridValue(grid);
     grid.showCells();
-    //grid.getCell(0,0).value += 3;
-    cout << grid.getLeftCell(grid.getCell(1,0)).value << endl;
+
+    MinGL window("Demineur", nsGraphics::Vec2D(750,750), nsGraphics::Vec2D(100,100));
+
     return 0;
 }
