@@ -8,9 +8,11 @@ include(../MinGL/mingl.pri)
 SOURCES += \
         game.cpp \
         grid.cpp \
-        main.cpp
+        main.cpp \
+    draw.cpp
 
 HEADERS += \
     cell.h \
     game.h \
-    grid.h
+    grid.h \
+    draw.h

@@ -65,8 +65,10 @@ SOURCES       = ../MinGL/src/audio/audioengine.cpp \
 		../MinGL/src/transition/transition.cpp \
 		../MinGL/src/transition/transition_contract.cpp \
 		../MinGL/src/transition/transition_engine.cpp \
+		../Demineur/game.cpp \
 		../Demineur/grid.cpp \
-		../Demineur/main.cpp 
+		../Demineur/main.cpp \
+		../Demineur/draw.cpp 
 OBJECTS       = audioengine.o \
 		cexception.o \
 		mingl.o \
@@ -84,8 +86,10 @@ OBJECTS       = audioengine.o \
 		transition.o \
 		transition_contract.o \
 		transition_engine.o \
+		game.o \
 		grid.o \
-		main.o
+		main.o \
+		draw.o
 DIST          = ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/common/unix.conf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/common/linux.conf \
@@ -217,6 +221,7 @@ DIST          = ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		../Demineur/.qmake.stash \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/default_pre.prf \
 		../MinGL/mingl.pri \
@@ -257,7 +262,9 @@ DIST          = ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/mathieu/PROGRAMMATION/PROJETS/Demineur/MinGL/include/mingl/transition/transition_engine.h \
 		/home/mathieu/PROGRAMMATION/PROJETS/Demineur/MinGL/include/mingl/transition/transition_types.h \
 		cell.h \
-		grid.h ../MinGL/src/audio/audioengine.cpp \
+		game.h \
+		grid.h \
+		draw.h ../MinGL/src/audio/audioengine.cpp \
 		../MinGL/src/exception/cexception.cpp \
 		../MinGL/src/mingl.cpp \
 		../MinGL/src/event/event_manager.cpp \
@@ -274,8 +281,10 @@ DIST          = ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../MinGL/src/transition/transition.cpp \
 		../MinGL/src/transition/transition_contract.cpp \
 		../MinGL/src/transition/transition_engine.cpp \
+		../Demineur/game.cpp \
 		../Demineur/grid.cpp \
-		../Demineur/main.cpp
+		../Demineur/main.cpp \
+		../Demineur/draw.cpp
 QMAKE_TARGET  = Demineur
 DESTDIR       = 
 TARGET        = Demineur
@@ -418,6 +427,7 @@ Makefile: ../Demineur/Demineur.pro ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/default_pre.prf \
 		../MinGL/mingl.pri \
@@ -563,6 +573,7 @@ Makefile: ../Demineur/Demineur.pro ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-
 ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/qt_config.prf:
 ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/default_pre.prf:
 ../MinGL/mingl.pri:
@@ -755,13 +766,43 @@ transition_engine.o: ../MinGL/src/transition/transition_engine.cpp ../MinGL/incl
 		../MinGL/include/mingl/transition/transition_types.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o transition_engine.o ../MinGL/src/transition/transition_engine.cpp
 
-grid.o: ../Demineur/grid.cpp ../Demineur/grid.h \
+game.o: ../Demineur/game.cpp ../Demineur/game.h \
+		../Demineur/grid.h \
 		../Demineur/cell.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../Demineur/game.cpp
+
+grid.o: ../Demineur/grid.cpp ../Demineur/grid.h \
+		../Demineur/cell.h \
+		../Demineur/game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grid.o ../Demineur/grid.cpp
 
-main.o: ../Demineur/main.cpp ../Demineur/cell.h \
-		../Demineur/grid.h
+main.o: ../Demineur/main.cpp ../MinGL/include/mingl/mingl.h \
+		../MinGL/include/mingl/graphics/idrawable.h \
+		../MinGL/include/mingl/graphics/rgbacolor.h \
+		../MinGL/include/mingl/tools/ieditable.h \
+		../MinGL/include/mingl/tools/ieditable.hpp \
+		../MinGL/include/mingl/graphics/vec2d.h \
+		../MinGL/include/mingl/event/event_manager.h \
+		../MinGL/include/mingl/event/event.hpp \
+		../Demineur/cell.h \
+		../Demineur/grid.h \
+		../Demineur/game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Demineur/main.cpp
+
+draw.o: ../Demineur/draw.cpp ../Demineur/draw.h \
+		../Demineur/cell.h \
+		../MinGL/include/mingl/mingl.h \
+		../MinGL/include/mingl/graphics/idrawable.h \
+		../MinGL/include/mingl/graphics/rgbacolor.h \
+		../MinGL/include/mingl/tools/ieditable.h \
+		../MinGL/include/mingl/tools/ieditable.hpp \
+		../MinGL/include/mingl/graphics/vec2d.h \
+		../MinGL/include/mingl/event/event_manager.h \
+		../MinGL/include/mingl/event/event.hpp \
+		../MinGL/include/mingl/shape/rectangle.h \
+		../MinGL/include/mingl/shape/shape.h \
+		../MinGL/include/mingl/transition/itransitionable.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o draw.o ../Demineur/draw.cpp
 
 ####### Install
 
