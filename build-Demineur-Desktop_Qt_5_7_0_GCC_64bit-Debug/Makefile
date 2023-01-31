@@ -90,7 +90,8 @@ OBJECTS       = audioengine.o \
 		grid.o \
 		main.o \
 		draw.o
-DIST          = ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
+DIST          = ../Sprites \
+		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/common/unix.conf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/common/linux.conf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/common/sanitize.conf \
@@ -786,7 +787,8 @@ main.o: ../Demineur/main.cpp ../MinGL/include/mingl/mingl.h \
 		../MinGL/include/mingl/event/event.hpp \
 		../Demineur/cell.h \
 		../Demineur/grid.h \
-		../Demineur/game.h
+		../Demineur/game.h \
+		../Demineur/draw.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Demineur/main.cpp
 
 draw.o: ../Demineur/draw.cpp ../Demineur/draw.h \
@@ -801,7 +803,9 @@ draw.o: ../Demineur/draw.cpp ../Demineur/draw.h \
 		../MinGL/include/mingl/event/event.hpp \
 		../MinGL/include/mingl/shape/rectangle.h \
 		../MinGL/include/mingl/shape/shape.h \
-		../MinGL/include/mingl/transition/itransitionable.h
+		../MinGL/include/mingl/transition/itransitionable.h \
+		../MinGL/include/mingl/gui/text.h \
+		../MinGL/include/mingl/gui/glut_font.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o draw.o ../Demineur/draw.cpp
 
 ####### Install

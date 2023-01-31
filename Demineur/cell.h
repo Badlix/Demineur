@@ -6,6 +6,7 @@ struct Cell {
     unsigned posY;
     unsigned value;
     bool isHidden;
+    bool hasFlag;
 };
 
 // List of value :

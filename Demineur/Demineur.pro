@@ -16,3 +16,6 @@ HEADERS += \
     game.h \
     grid.h \
     draw.h
+
+DISTFILES += \
+    ../Sprites

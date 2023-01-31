@@ -89,6 +89,10 @@ public :
      */
     bool isThereCellDown(const Cell &cell);
 
+    void makeCellVisible(Cell &cell);
+
+    void putFlag(Cell &cell);
+
     /**
      * @brief show cells fo the grid
      */

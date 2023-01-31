@@ -11,7 +11,7 @@ vector<vector<Cell>> Grid::initGrid() {
     for (unsigned y (0) ; y < m_height; ++y) {
         cells.push_back({});
         for (unsigned x (0); x < m_width; ++x) {
-            cells[y].push_back(Cell{x,y,0,true});
+            cells[y].push_back(Cell{x,y,0,true,false});
         }
     }
     return cells;
@@ -86,6 +86,14 @@ bool Grid::isThereCellUp(const Cell &cell) {
 
 bool Grid::isThereCellDown(const Cell &cell) {
     return (cell.posY < m_height-1);
+}
+
+void Grid::makeCellVisible(Cell &cell) {
+    if (cell.isHidden) cell.isHidden = false;
+}
+
+void Grid::putFlag(Cell &cell) {
+    if (!cell.hasFlag) cell.hasFlag = true;
 }
 
 void Grid::showCells() {

@@ -7,11 +7,16 @@
 #include "game.h"
 #include "draw.h"
 
+// EASY : 9x9 - 10
+// NORMAL : 16x16 - 40
+// DIFFICULT : 35x16 - 99
+// CUSTOM
+
 using namespace std;
 
 int main()
 {
-    Grid grid = Grid(5,5,7);
+    Grid grid = Grid(35,16,200);
     initGridValue(grid);
     grid.showCells();
 
@@ -27,10 +32,10 @@ int main()
 
         for (unsigned y = 0; y < grid.getHeight(); ++y) {
             for (unsigned x = 0; x < grid.getWidth(); ++x) {
-                drawCell(window, nsGraphics::Vec2D{x*25+20,y*25+20}, grid.getCell(x,y));
+                drawCell(window, nsGraphics::Vec2D{x*30+20,y*30+20}, grid.getCell(x,y));
             }
         }
-        events(window);
+        events(window, grid);
 
         window.finishFrame();
         this_thread::sleep_for(chrono::milliseconds(1000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
