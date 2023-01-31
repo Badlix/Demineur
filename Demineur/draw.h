@@ -6,4 +6,8 @@
 
 void drawCell(MinGL &window, nsGraphics::Vec2D pos, Cell &cell);
 
+void getCell(int x, int y);
+
+void events(MinGL &window);
+
 #endif // DRAW_H

@@ -30,22 +30,6 @@ Cell& Grid::getCell(const unsigned x, const unsigned y) {
     return m_cells[y][x];
 }
 
-Cell& Grid::getRightCell(const Cell &cell) {
-    return m_cells[cell.posY][cell.posX+1];
-}
-
-Cell& Grid::getLeftCell(const Cell &cell) {
-    return m_cells[cell.posY][cell.posX-1];
-}
-
-Cell& Grid::getUpCell(const Cell &cell) {
-    return m_cells[cell.posY-1][cell.posX];
-}
-
-Cell& Grid::getDownCell(const Cell &cell) {
-    return m_cells[cell.posY+1][cell.posX];
-}
-
 vector<Cell> Grid::getAllNearCell(const Cell &cell) {
     vector<Cell> nearCells = {};
     // up
@@ -69,6 +53,23 @@ vector<Cell> Grid::getAllNearCell(const Cell &cell) {
     // left
     if (isThereCellLeft(cell)) nearCells.push_back(getLeftCell(cell));
     return nearCells;
+}
+
+
+Cell& Grid::getRightCell(const Cell &cell) {
+    return m_cells[cell.posY][cell.posX+1];
+}
+
+Cell& Grid::getLeftCell(const Cell &cell) {
+    return m_cells[cell.posY][cell.posX-1];
+}
+
+Cell& Grid::getUpCell(const Cell &cell) {
+    return m_cells[cell.posY-1][cell.posX];
+}
+
+Cell& Grid::getDownCell(const Cell &cell) {
+    return m_cells[cell.posY+1][cell.posX];
 }
 
 bool Grid::isThereCellRight(const Cell &cell) {

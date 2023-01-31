@@ -71,7 +71,8 @@ SOURCES       = ../MinGL/src/audio/audioengine.cpp \
 		../MinGL/src/transition/transition_engine.cpp \
 		../Demineur/game.cpp \
 		../Demineur/grid.cpp \
-		../Demineur/main.cpp 
+		../Demineur/main.cpp \
+		../Demineur/draw.cpp 
 OBJECTS       = audioengine.o \
 		cexception.o \
 		mingl.o \
@@ -91,7 +92,8 @@ OBJECTS       = audioengine.o \
 		transition_engine.o \
 		game.o \
 		grid.o \
-		main.o
+		main.o \
+		draw.o
 DIST          = /opt/Qt-6.3/6.3.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt-6.3/6.3.0/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt-6.3/6.3.0/gcc_64/mkspecs/common/linux.conf \
@@ -268,7 +270,8 @@ DIST          = /opt/Qt-6.3/6.3.0/gcc_64/mkspecs/features/spec_pre.prf \
 		/amuhome/l22011431/PP/Demineur/MinGL/include/mingl/transition/transition_types.h \
 		cell.h \
 		game.h \
-		grid.h ../MinGL/src/audio/audioengine.cpp \
+		grid.h \
+		draw.h ../MinGL/src/audio/audioengine.cpp \
 		../MinGL/src/exception/cexception.cpp \
 		../MinGL/src/mingl.cpp \
 		../MinGL/src/event/event_manager.cpp \
@@ -287,7 +290,8 @@ DIST          = /opt/Qt-6.3/6.3.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../MinGL/src/transition/transition_engine.cpp \
 		../Demineur/game.cpp \
 		../Demineur/grid.cpp \
-		../Demineur/main.cpp
+		../Demineur/main.cpp \
+		../Demineur/draw.cpp
 QMAKE_TARGET  = Demineur
 DESTDIR       = 
 TARGET        = Demineur
@@ -781,12 +785,38 @@ game.o: ../Demineur/game.cpp ../Demineur/game.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../Demineur/game.cpp
 
 grid.o: ../Demineur/grid.cpp ../Demineur/grid.h \
-		../Demineur/cell.h
+		../Demineur/cell.h \
+		../Demineur/game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grid.o ../Demineur/grid.cpp
 
-main.o: ../Demineur/main.cpp ../Demineur/cell.h \
-		../Demineur/grid.h
+main.o: ../Demineur/main.cpp ../MinGL/include/mingl/mingl.h \
+		../MinGL/include/mingl/graphics/idrawable.h \
+		../MinGL/include/mingl/graphics/rgbacolor.h \
+		../MinGL/include/mingl/tools/ieditable.h \
+		../MinGL/include/mingl/tools/ieditable.hpp \
+		../MinGL/include/mingl/graphics/vec2d.h \
+		../MinGL/include/mingl/event/event_manager.h \
+		../MinGL/include/mingl/event/event.hpp \
+		../Demineur/cell.h \
+		../Demineur/grid.h \
+		../Demineur/game.h \
+		../Demineur/draw.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Demineur/main.cpp
+
+draw.o: ../Demineur/draw.cpp ../Demineur/draw.h \
+		../Demineur/cell.h \
+		../MinGL/include/mingl/mingl.h \
+		../MinGL/include/mingl/graphics/idrawable.h \
+		../MinGL/include/mingl/graphics/rgbacolor.h \
+		../MinGL/include/mingl/tools/ieditable.h \
+		../MinGL/include/mingl/tools/ieditable.hpp \
+		../MinGL/include/mingl/graphics/vec2d.h \
+		../MinGL/include/mingl/event/event_manager.h \
+		../MinGL/include/mingl/event/event.hpp \
+		../MinGL/include/mingl/shape/rectangle.h \
+		../MinGL/include/mingl/shape/shape.h \
+		../MinGL/include/mingl/transition/itransitionable.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o draw.o ../Demineur/draw.cpp
 
 ####### Install
 

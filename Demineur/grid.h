@@ -11,12 +11,6 @@ class Grid {
 public :
 
     /**
-     * @brief Create a grid with values depending on parameters
-     * @return a vector of vector of cells ready to be used in a play
-     */
-    std::vector<std::vector<Cell>> initGrid();
-
-    /**
      * @brief Constructor for the class Grid
      * @param[in] width : Number of cells in a line of the grid
      * @param[in] height : Number of cells in a columon of the grid
@@ -125,6 +119,12 @@ private:
     size_t m_height = 1;
     unsigned m_bombNb;
     std::vector<std::vector<Cell>> m_cells;
+
+    /**
+     * @brief Create a grid with values depending on parameters
+     * @return a vector of vector of cells ready to be used in a play
+     */
+    std::vector<std::vector<Cell>> initGrid();
 };
 
 #endif // GRID_H

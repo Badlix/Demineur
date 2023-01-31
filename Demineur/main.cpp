@@ -15,7 +15,7 @@ int main()
     initGridValue(grid);
     grid.showCells();
 
-    MinGL window("Demineur", nsGraphics::Vec2D(750,750), nsGraphics::Vec2D(100,100), nsGraphics::KGray);
+    MinGL window("Demineur", nsGraphics::Vec2D(750,750), nsGraphics::Vec2D(100,100), nsGraphics::RGBAcolor(200,200,200));
     window.initGlut();
     window.initGraphic();
 
@@ -27,12 +27,12 @@ int main()
 
         for (unsigned y = 0; y < grid.getHeight(); ++y) {
             for (unsigned x = 0; x < grid.getWidth(); ++x) {
-                drawCell(window, nsGraphics::Vec2D{x*50,y*50}, grid.getCell(x,y));
+                drawCell(window, nsGraphics::Vec2D{x*25+20,y*25+20}, grid.getCell(x,y));
             }
         }
+        events(window);
 
         window.finishFrame();
-        window.getEventManager().clearEvents();
         this_thread::sleep_for(chrono::milliseconds(1000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
         frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
     }
