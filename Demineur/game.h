@@ -4,4 +4,6 @@
 
 void initGridValue(Grid &grid);
 
+void revealNearCells(Cell &cell, Grid &grid);
+
 #endif // GAME_H

@@ -8,6 +8,8 @@
 
 void drawCell(MinGL &window, nsGraphics::Vec2D pos, Cell &cell);
 
+void drawGrid(MinGL &window, Grid &grid);
+
 nsGraphics::RGBAcolor whichNumberColor(unsigned number);
 
 std::pair<unsigned, unsigned> getInd(unsigned x, unsigned y);

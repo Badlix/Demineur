@@ -8,9 +8,9 @@ using namespace std;
 vector<vector<Cell>> Grid::initGrid() {
     // Initialisation of empty cells
     vector<vector<Cell>> cells = {};
-    for (unsigned y (0) ; y < m_height; ++y) {
+    for (unsigned y(0); y < m_height; ++y) {
         cells.push_back({});
-        for (unsigned x (0); x < m_width; ++x) {
+        for (unsigned x(0); x < m_width; ++x) {
             cells[y].push_back(Cell{x,y,0,true,false});
         }
     }
@@ -30,28 +30,32 @@ Cell& Grid::getCell(const unsigned x, const unsigned y) {
     return m_cells[y][x];
 }
 
-vector<Cell> Grid::getAllNearCell(const Cell &cell) {
+vector<Cell> Grid::getNearDiagonalCells(const Cell &cell) {
+    vector<Cell> diagonalCells = {};
+    if (isThereCellUp(cell) && isThereCellRight(cell)) diagonalCells.push_back(getUpCell(getRightCell(cell)));
+    if (isThereCellUp(cell) && isThereCellLeft(cell)) diagonalCells.push_back(getUpCell(getLeftCell(cell)));
+    if (isThereCellDown(cell) && isThereCellRight(cell)) diagonalCells.push_back(getDownCell(getRightCell(cell)));
+    if (isThereCellDown(cell) && isThereCellLeft(cell)) diagonalCells.push_back(getDownCell(getLeftCell(cell)));
+    return diagonalCells;
+}
+
+vector<Cell> Grid::getNearDirectCells(const Cell &cell) {
+    vector<Cell> directCells = {};
+    if (isThereCellUp(cell)) directCells.push_back(getUpCell(cell));
+    if (isThereCellDown(cell)) directCells.push_back(getDownCell(cell));
+    if (isThereCellRight(cell)) directCells.push_back(getRightCell(cell));
+    if (isThereCellLeft(cell)) directCells.push_back(getLeftCell(cell));
+    return directCells;
+}
+
+vector<Cell> Grid::getAllNearCells(const Cell &cell) {
     vector<Cell> nearCells = {};
-    // up
-    if (isThereCellUp(cell)) {
-        nearCells.push_back(getUpCell(cell));
-        // up-right
-        if (isThereCellRight(cell)) nearCells.push_back(getUpCell(getRightCell(cell)));
-        // up-left
-        if (isThereCellLeft(cell)) nearCells.push_back(getUpCell(getLeftCell(cell)));
+    vector<Cell> tmp = {};
+    nearCells = getNearDirectCells(cell);
+    tmp = getNearDiagonalCells(cell);
+    for (Cell c : tmp) {
+        nearCells.push_back(c);
     }
-    // down
-    if (isThereCellDown(cell)) {
-        nearCells.push_back(getDownCell(cell));
-        // down-right
-        if (isThereCellRight(cell)) nearCells.push_back(getDownCell(getRightCell(cell)));
-        // down-left
-        if (isThereCellLeft(cell)) nearCells.push_back(getDownCell(getLeftCell(cell)));
-    }
-    // right
-    if (isThereCellRight(cell)) nearCells.push_back(getRightCell(cell));
-    // left
-    if (isThereCellLeft(cell)) nearCells.push_back(getLeftCell(cell));
     return nearCells;
 }
 
@@ -96,11 +100,13 @@ void Grid::putFlag(Cell &cell) {
     if (!cell.hasFlag) cell.hasFlag = true;
 }
 
-void Grid::showCells() {
+void Grid::showCells(bool allValue) {
     cout << endl;
     for (const vector<Cell> &line : m_cells) {
         for (Cell cell : line) {
-            cout << cell.value << ' ';
+            if (allValue) cout << cell.value << ' ';
+            else if (cell.isHidden) cout << "- ";
+            else cout << cell.value << ' ';
         }
         cout << endl;
     }

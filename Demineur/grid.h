@@ -55,11 +55,25 @@ public :
     Cell &getDownCell(const Cell &cell);
 
     /**
+     * @brief get the four diagonal cell
+     * @param[in] a cell
+     * @return list of diagonal cell (between 1 and 4)
+     */
+    std::vector<Cell> getNearDiagonalCells(const Cell &cell);
+
+    /**
+     * @brief get the four direct next cell
+     * @param[in] a cell
+     * @return list of the direct next cells (between 2 and 4)
+     */
+    std::vector<Cell> getNearDirectCells(const Cell &cell);
+
+    /**
      * @brief get all the cell next to a certain cell
      * @param[in] a cell
      * @return a list between 3 and 8 cells
      */
-    std::vector<Cell> getAllNearCell(const Cell &cell);
+    std::vector<Cell> getAllNearCells(const Cell &cell);
 
     /**
      * @brief check if there is a cell next to the right of a certain cell
@@ -96,7 +110,7 @@ public :
     /**
      * @brief show cells fo the grid
      */
-    void showCells();
+    void showCells(bool allValue=true);
 
     /**
      * @brief get the width of the grid

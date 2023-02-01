@@ -28,6 +28,14 @@ void drawCell(MinGL &window, nsGraphics::Vec2D pos, Cell &cell) {
     }
 }
 
+void drawGrid(MinGL &window, Grid &grid) {
+    for (size_t y(0); y < grid.getHeight(); ++y) {
+        for (size_t x(0); x < grid.getWidth(); ++x) {
+            drawCell(window, nsGraphics::Vec2D{x*30+20,y*30+20}, grid.getCell(x,y));
+        }
+    }
+}
+
 RGBAcolor whichNumberColor(unsigned number) {
     switch(number) {
     case 0:
@@ -62,10 +70,12 @@ void events(MinGL &window, Grid &grid)
         const nsEvent::Event_t actualEvent = window.getEventManager().pullEvent();
         if (actualEvent.eventType == nsEvent::EventType_t::MouseClick) {
             ind = convertCordToIndex(actualEvent.eventData.clickData.x, actualEvent.eventData.clickData.y);
-            if (actualEvent.eventData.clickData.button == 0) { // left click
-                grid.makeCellVisible(grid.getCell(ind.first, ind.second));
-            } else if (actualEvent.eventData.clickData.button == 2) { // right click
-                grid.putFlag(grid.getCell(ind.first, ind.second));
+            if (ind.first < grid.getWidth() && ind.second < grid.getHeight()) {
+                if (actualEvent.eventData.clickData.button == 0) { // left click
+                    grid.makeCellVisible(grid.getCell(ind.first, ind.second));
+                } else if (actualEvent.eventData.clickData.button == 2) { // right click
+                    grid.putFlag(grid.getCell(ind.first, ind.second));
+                }
             }
         }
     }
