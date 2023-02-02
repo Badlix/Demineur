@@ -1,38 +1,49 @@
+#define FPS_LIMIT 60
 #include <iostream>
 #include "mingl/graphics/vec2d.h"
 #include "mingl/mingl.h"
-#include "thread"
+#include <thread>
 #include "game.h"
+#include "draw.h"
+#include "grid.h"
 
 using namespace std;
 
 void launchGame(const string difficulty) {
     Grid grid = createGrid(difficulty);
-    pair<unsigned, unsigned> windowSize = {grid.getWidth()*30, grid.getHeight()*30+20};
-    MinGL window("Demineur - " + to_string(grid.getWidth() + "x" + to_string(grid.getHeight() + " - " + to_string(grid.getBombNb() + " bombs"))),
-                 nsGraphics::Vec2D(windowSize.first, windowSize.second),
-                 nsGraphics::Vec2D(window.getWindowSize().getX()/2-windowSize.first/2, window.getWindowSize().getY()/2-windowSize.second/2),
+    bool isVictory;
+    bool isGameRunning = true;
+    pair<unsigned, unsigned> windowSize = {grid.getWidth()*30, grid.getHeight()*30};
+    MinGL window("Demineur - " + to_string(grid.getWidth()) + "x" + to_string(grid.getHeight()),
+                 nsGraphics::Vec2D(windowSize.first, windowSize.second) + beginOfGrid,
+                 nsGraphics::Vec2D(100, 100),
                  nsGraphics::RGBAcolor(200,200,200));
     window.initGlut();
     window.initGraphic();
     chrono::microseconds frameTime = chrono::microseconds::zero();
-    while (window.open()) {
+    while (isGameRunning) {
+        chrono::time_point<chrono::steady_clock> start = chrono::steady_clock::now();
         window.clearScreen();
         drawGrid(window, grid);
         events(window, grid);
+        checkIfGameEnds(grid, isGameRunning, isVictory);
         window.finishFrame();
         this_thread::sleep_for(chrono::milliseconds(1000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
         frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
     }
+//    if (isVictory) {
+
+//    }
     return;
 }
 
+// JE TE BAISE RAPHAEL
 Grid createGrid(const string difficulty) {
-    Grid grid;
+    Grid grid(0,0,0);
     if (difficulty == "easy") {
-        grid = Grid(8,8,16);
+         grid = Grid(8,8,16);
     } else if (difficulty == "medium") {
-        grid = Grid(16,16,40);
+        grid = Grid(16,16,2);
     } else if (difficulty == "hard") {
         grid = Grid(35,16,99);
     } else {
@@ -75,15 +86,28 @@ void revealNearCells(Cell &cell, Grid &grid) {
     }
     vector<Cell> tmp = grid.getAllNearCells(cell);
     grid.makeCellVisible(cell);
-    grid.setNbVisibleCell(grid.getNbVisibleCell()-1);
     for (Cell c : tmp) {
         revealNearCells(grid.getCell(c.posX, c.posY), grid);
     }
     return;
 }
 
-void checkEndGame() {
-
+void checkIfGameEnds(Grid &grid, bool &isGameRunning, bool &isVictory) {
+    cout << grid.getNbVisibleCell() << endl;
+    if (grid.getWidth() * grid.getHeight() - grid.getNbVisibleCell() == grid.getBombNb()) {
+        isGameRunning = false;
+        isVictory = true;
+        return;
+    }
+    for (const vector<Cell> &line : grid.getAllCells()) {
+        for (const Cell &c : line) {
+            if (c.value == 9 && c.isHidden == false) {
+                isGameRunning = false;
+                isVictory = false;
+                return;
+            }
+        }
+    }
 }
 
 

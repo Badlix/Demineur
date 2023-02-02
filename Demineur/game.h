@@ -10,4 +10,6 @@ void initGridValue(Grid &grid);
 
 void revealNearCells(Cell &cell, Grid &grid);
 
+void checkIfGameEnds(Grid &grid, bool &isGameRunning, bool &isVictory);
+
 #endif // GAME_H

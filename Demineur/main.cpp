@@ -33,7 +33,7 @@ int main()
 //        this_thread::sleep_for(chrono::milliseconds(1000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
 //        frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
 //    }
-    launchGame("easy");
+    launchGame("medium");
     return 0;
 }
 

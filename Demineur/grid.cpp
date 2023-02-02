@@ -22,7 +22,7 @@ Grid::Grid(const unsigned width, const unsigned height, const unsigned bombsNb) 
     m_height = height;
     m_bombNb = bombsNb;
     m_cells = initGrid();
-    m_visibleCell = height*width;
+    m_visibleCell = 0;
 }
 
 Cell& Grid::getCell(const unsigned x, const unsigned y) {
@@ -90,7 +90,10 @@ bool Grid::isThereCellDown(const Cell &cell) {
 }
 
 void Grid::makeCellVisible(Cell &cell) {
-    if (cell.isHidden) cell.isHidden = false;
+    if (cell.isHidden) {
+        cell.isHidden = false;
+        setNbVisibleCell(getNbVisibleCell()+1);
+    }
 }
 
 void Grid::putFlag(Cell &cell) {

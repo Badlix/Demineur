@@ -18,4 +18,5 @@ HEADERS += \
     draw.h
 
 DISTFILES += \
-    ../Sprites
+    ../Sprites \
+    highScores

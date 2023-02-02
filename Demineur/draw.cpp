@@ -32,7 +32,7 @@ void drawCell(MinGL &window, nsGraphics::Vec2D pos, Cell &cell) {
 void drawGrid(MinGL &window, Grid &grid) {
     for (size_t y(0); y < grid.getHeight(); ++y) {
         for (size_t x(0); x < grid.getWidth(); ++x) {
-            drawCell(window, nsGraphics::Vec2D{x*30+20,y*30+20}, grid.getCell(x,y));
+            drawCell(window, nsGraphics::Vec2D{x*30,y*30} + beginOfGrid, grid.getCell(x,y));
         }
     }
 }
@@ -60,7 +60,9 @@ RGBAcolor whichNumberColor(unsigned number) {
 }
 
 std::pair<unsigned, unsigned> convertCordToIndex(unsigned x, unsigned y) {
-    return std::make_pair((x-20)/30, (y-20)/30);
+    unsigned indX = (x - beginOfGrid.getX())/30;
+    unsigned indY = (y - beginOfGrid.getY())/30;
+    return std::make_pair(indX, indY);
 }
 
 void events(MinGL &window, Grid &grid)
