@@ -1,7 +1,46 @@
 #include <iostream>
+#include "mingl/graphics/vec2d.h"
+#include "mingl/mingl.h"
+#include "thread"
 #include "game.h"
 
 using namespace std;
+
+void launchGame(const string difficulty) {
+    Grid grid = createGrid(difficulty);
+    pair<unsigned, unsigned> windowSize = {grid.getWidth()*30, grid.getHeight()*30+20};
+    MinGL window("Demineur - " + to_string(grid.getWidth() + "x" + to_string(grid.getHeight() + " - " + to_string(grid.getBombNb() + " bombs"))),
+                 nsGraphics::Vec2D(windowSize.first, windowSize.second),
+                 nsGraphics::Vec2D(window.getWindowSize().getX()/2-windowSize.first/2, window.getWindowSize().getY()/2-windowSize.second/2),
+                 nsGraphics::RGBAcolor(200,200,200));
+    window.initGlut();
+    window.initGraphic();
+    chrono::microseconds frameTime = chrono::microseconds::zero();
+    while (window.open()) {
+        window.clearScreen();
+        drawGrid(window, grid);
+        events(window, grid);
+        window.finishFrame();
+        this_thread::sleep_for(chrono::milliseconds(1000 / FPS_LIMIT) - chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start));
+        frameTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now() - start);
+    }
+    return;
+}
+
+Grid createGrid(const string difficulty) {
+    Grid grid;
+    if (difficulty == "easy") {
+        grid = Grid(8,8,16);
+    } else if (difficulty == "medium") {
+        grid = Grid(16,16,40);
+    } else if (difficulty == "hard") {
+        grid = Grid(35,16,99);
+    } else {
+        grid = Grid(10,10,10);
+    }
+    initGridValue(grid);
+    return grid;
+}
 
 void initGridValue(Grid &grid) {
     // Implant bombs
@@ -34,16 +73,18 @@ void revealNearCells(Cell &cell, Grid &grid) {
         grid.makeCellVisible(cell);
         return;
     }
-    vector<Cell> tmp = grid.getNearDirectCells(cell);
+    vector<Cell> tmp = grid.getAllNearCells(cell);
     grid.makeCellVisible(cell);
-    if (tmp.size() == 0) return;
-    if (tmp.size() >= 1) revealNearCells(grid.getCell(tmp[0].posX, tmp[0].posY), grid);
-    if (tmp.size() >= 2) revealNearCells(grid.getCell(tmp[1].posX, tmp[1].posY), grid);
-    if (tmp.size() >= 3) revealNearCells(grid.getCell(tmp[2].posX, tmp[2].posY), grid);
-    if (tmp.size() == 4) revealNearCells(grid.getCell(tmp[3].posX, tmp[3].posY), grid);
+    grid.setNbVisibleCell(grid.getNbVisibleCell()-1);
+    for (Cell c : tmp) {
+        revealNearCells(grid.getCell(c.posX, c.posY), grid);
+    }
     return;
 }
 
+void checkEndGame() {
+
+}
 
 
 

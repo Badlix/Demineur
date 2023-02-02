@@ -1,5 +1,6 @@
 #include "draw.h"
 #include "grid.h"
+#include "game.h"
 #include "mingl/graphics/vec2d.h"
 #include "mingl/shape/rectangle.h"
 #include "mingl/shape/line.h"
@@ -72,7 +73,8 @@ void events(MinGL &window, Grid &grid)
             ind = convertCordToIndex(actualEvent.eventData.clickData.x, actualEvent.eventData.clickData.y);
             if (ind.first < grid.getWidth() && ind.second < grid.getHeight()) {
                 if (actualEvent.eventData.clickData.button == 0) { // left click
-                    grid.makeCellVisible(grid.getCell(ind.first, ind.second));
+                    //grid.makeCellVisible(grid.getCell(ind.first, ind.second));
+                    revealNearCells(grid.getCell(ind.first, ind.second), grid);
                 } else if (actualEvent.eventData.clickData.button == 2) { // right click
                     grid.putFlag(grid.getCell(ind.first, ind.second));
                 }

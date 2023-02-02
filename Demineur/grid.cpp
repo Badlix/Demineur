@@ -22,6 +22,7 @@ Grid::Grid(const unsigned width, const unsigned height, const unsigned bombsNb) 
     m_height = height;
     m_bombNb = bombsNb;
     m_cells = initGrid();
+    m_visibleCell = height*width;
 }
 
 Cell& Grid::getCell(const unsigned x, const unsigned y) {
@@ -30,32 +31,28 @@ Cell& Grid::getCell(const unsigned x, const unsigned y) {
     return m_cells[y][x];
 }
 
-vector<Cell> Grid::getNearDiagonalCells(const Cell &cell) {
-    vector<Cell> diagonalCells = {};
-    if (isThereCellUp(cell) && isThereCellRight(cell)) diagonalCells.push_back(getUpCell(getRightCell(cell)));
-    if (isThereCellUp(cell) && isThereCellLeft(cell)) diagonalCells.push_back(getUpCell(getLeftCell(cell)));
-    if (isThereCellDown(cell) && isThereCellRight(cell)) diagonalCells.push_back(getDownCell(getRightCell(cell)));
-    if (isThereCellDown(cell) && isThereCellLeft(cell)) diagonalCells.push_back(getDownCell(getLeftCell(cell)));
-    return diagonalCells;
-}
-
-vector<Cell> Grid::getNearDirectCells(const Cell &cell) {
-    vector<Cell> directCells = {};
-    if (isThereCellUp(cell)) directCells.push_back(getUpCell(cell));
-    if (isThereCellDown(cell)) directCells.push_back(getDownCell(cell));
-    if (isThereCellRight(cell)) directCells.push_back(getRightCell(cell));
-    if (isThereCellLeft(cell)) directCells.push_back(getLeftCell(cell));
-    return directCells;
-}
-
 vector<Cell> Grid::getAllNearCells(const Cell &cell) {
     vector<Cell> nearCells = {};
-    vector<Cell> tmp = {};
-    nearCells = getNearDirectCells(cell);
-    tmp = getNearDiagonalCells(cell);
-    for (Cell c : tmp) {
-        nearCells.push_back(c);
+    // up
+    if (isThereCellUp(cell)) {
+        nearCells.push_back(getUpCell(cell));
+        // up-right
+        if (isThereCellRight(cell)) nearCells.push_back(getUpCell(getRightCell(cell)));
+        // up-left
+        if (isThereCellLeft(cell)) nearCells.push_back(getUpCell(getLeftCell(cell)));
     }
+    // down
+    if (isThereCellDown(cell)) {
+        nearCells.push_back(getDownCell(cell));
+        // down-right
+        if (isThereCellRight(cell)) nearCells.push_back(getDownCell(getRightCell(cell)));
+        // down-left
+        if (isThereCellLeft(cell)) nearCells.push_back(getDownCell(getLeftCell(cell)));
+    }
+    // right
+    if (isThereCellRight(cell)) nearCells.push_back(getRightCell(cell));
+    // left
+    if (isThereCellLeft(cell)) nearCells.push_back(getLeftCell(cell));
     return nearCells;
 }
 
@@ -128,9 +125,13 @@ std::vector<std::vector<Cell>> &Grid::getAllCells() {
     return m_cells;
 }
 
+unsigned Grid::getNbVisibleCell() {
+    return m_visibleCell;
+}
 
-
-
+void Grid::setNbVisibleCell(unsigned nb) {
+    m_visibleCell = nb;
+}
 
 
 

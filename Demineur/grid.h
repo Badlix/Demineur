@@ -55,20 +55,6 @@ public :
     Cell &getDownCell(const Cell &cell);
 
     /**
-     * @brief get the four diagonal cell
-     * @param[in] a cell
-     * @return list of diagonal cell (between 1 and 4)
-     */
-    std::vector<Cell> getNearDiagonalCells(const Cell &cell);
-
-    /**
-     * @brief get the four direct next cell
-     * @param[in] a cell
-     * @return list of the direct next cells (between 2 and 4)
-     */
-    std::vector<Cell> getNearDirectCells(const Cell &cell);
-
-    /**
      * @brief get all the cell next to a certain cell
      * @param[in] a cell
      * @return a list between 3 and 8 cells
@@ -132,10 +118,15 @@ public :
      */
     std::vector<std::vector<Cell>> &getAllCells();
 
+    unsigned getNbVisibleCell();
+
+    void setNbVisibleCell(unsigned nb);
+
 private:
     size_t m_width = 1;
     size_t m_height = 1;
     unsigned m_bombNb;
+    unsigned m_visibleCell;
     std::vector<std::vector<Cell>> m_cells;
 
     /**
