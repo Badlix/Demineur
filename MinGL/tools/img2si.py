@@ -98,8 +98,8 @@ def convert_to_si2(source, output):
 def main():
     # Setup argument parser
 
-    source = "../../Sprites/defaultCell.png"
-    output = "../../Sprites/defaultCell.si2"
+    source = "credit.png"
+    output = "credit.si2"
 
     # Check that source file exists
     if not os.path.isfile(source):
