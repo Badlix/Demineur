@@ -1,4 +1,6 @@
 # Demineur
-Démineur en c++ avec la libraire graphique MinGL - janvier 2023  
+Démineur en c++ avec la libraire graphique MinGL - debut 2023  
 
-Première tentative de ma part en programmation objet.
+Première tentative en programmation objet.
+
+EN COURS
